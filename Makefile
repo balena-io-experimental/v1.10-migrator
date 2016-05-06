@@ -29,6 +29,7 @@ endif
 	./test/run.sh ${DOCKER_VERSION} ${STORAGE_DRIVER} ${MIGRATE_METHOD}
 
 docker-image: v1.10-migrator Dockerfile.image
-	tar -cf - $^ | docker build -f Dockerfile.image -t v1.10-migrator -
+	tar -cf - $^ | docker build -f Dockerfile.$(ARCH).image -t registry.resinstaging.io/resinhup/$(ARCH)-v1.10-migrator -
+	docker push registry.resinstaging.io/resinhup/$(ARCH)-v1.10-migrator
 
 .PHONY: build test docker-image
