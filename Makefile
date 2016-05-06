@@ -1,8 +1,11 @@
+ARCH = rpi# rpi/amd64/i386/armv7hf/armel
+
 v1.10-migrator: build
-	docker run --rm v1.10-migrator:build tar -C /go/bin -cvf - v1.10-migrator | tar -xvf -
+	docker run --rm v1.10-migrator:$(ARCH)-build tar -C /go/bin -cvf - v1.10-migrator | tar -xvf -
 
 build:
-	docker build -t v1.10-migrator:build .
+	cp Dockerfile.$(ARCH) Dockerfile
+	docker build -t v1.10-migrator:$(ARCH)-build .
 
 v1.10-migrator-local:
 	godep go build -o $@ .
